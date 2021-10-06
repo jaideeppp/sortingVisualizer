@@ -1,0 +1,29 @@
+.app-container {
+  margin: 0 10px;
+  min-height: calc(100vh - 80px);
+  position: relative;
+  margin-bottom: 50px;
+}
+
+.control-bar {
+  display: flex;
+  align-items: center;
+  margin: 20px 0;
+  flex-wrap: wrap;
+  font-size: 2rem;
+}
+
+.array-bar {
+  display: flex;
+  align-items: center;
+  flex-basis: 60%;
+  flex-grow: 1;
+  min-width: 300px;
+}
+
+.execution-bar {
+  display: flex;
+  align-items: center;
+  flex-basis: 40%;
+  flex-grow: 1;
+}

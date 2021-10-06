@@ -1,9 +1,12 @@
 import './App.css';
+import Controller from './components/Controller';
+import Navbar from './components/Navbar';
 
 function App() {
   return (
-    <div>
-      jaideep
+    <div className="app-container">
+      <Navbar />
+      <Controller />
     </div>
   );
 }
