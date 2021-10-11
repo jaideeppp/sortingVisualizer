@@ -27,3 +27,59 @@
   flex-basis: 40%;
   flex-grow: 1;
 }
+
+.algo-container {
+  padding: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
+  box-shadow: 0 5px 30px 0 rgba(0, 0, 0, 0.15);
+}
+
+.algo-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  column-gap: 20px;
+}
+
+.timer-div {
+  display: flex;
+  column-gap: 5px;
+  min-width: 7rem;
+  justify-self: flex-end;
+}
+
+.array-holder {
+  display: flex;
+  height: 175px;
+  align-items: center;
+  padding: 15px;
+  overflow: auto;
+}
+
+.array-item {
+  width: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid black;
+  height: 50px;
+  box-shadow: 0 5px 30px 0 rgba(0, 0, 0, 0.15);
+  border-radius: 5px;
+  flex-shrink: 0;
+}
+
+.info-footer {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 5px;
+}
+
+.all-algo {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 100%;
+  column-gap: 20px;
+  row-gap: 20px;
+}

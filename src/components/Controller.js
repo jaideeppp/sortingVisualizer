@@ -7,10 +7,25 @@ import { GiRollingEnergy } from "react-icons/gi";
 import Slider from "@material-ui/core/Slider";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
+import { convertArrayStringToArray, convertInputToArrayString, getRandowArray } from '../helper';
 
-function Controller() {
+function Controller({ array, setArray }) {
   const [isPausing, setIsPausing] = useState(false);
+  const [arrayString, setArrayString] = useState(array);
   const [progress, setProgress] = useState('reset');
+
+  function generateNewArray() {
+    const randomArray = getRandowArray();
+    setArray(randomArray)
+  }
+
+  function handleInputArray(value) {
+    const convertedInputString = convertInputToArrayString(value);
+    setArrayString(convertedInputString);
+
+    const convertedInput = convertArrayStringToArray(convertedInputString);
+    setArray(convertedInput);
+  }
 
   async function pauseAndDelaySorting() {
     // pauseSorting();
@@ -42,10 +57,13 @@ function Controller() {
         <Button
           endIcon={<GiRollingEnergy />}
           variant="contained"
-          color="primary">
+          color="primary"
+          onClick={generateNewArray}>
           Generate
         </Button>
         <TextField
+          value={arrayString}
+          onChange={(e) => handleInputArray(e.target.value)}
           id="outlined-basic"
           label="Input"
           variant="outlined"
