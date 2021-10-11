@@ -28,11 +28,7 @@ function Controller({ array, setArray }) {
   }
 
   async function pauseAndDelaySorting() {
-    // pauseSorting();
     setProgress("pause");
-    // setIsPausing(true);
-    // await delay(useControls.getState().swapTime);
-    // setIsPausing(false);
   }
 
   function getProgressButton() {

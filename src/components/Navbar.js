@@ -14,7 +14,6 @@ function a11yProps(index) {
 
 function Navbar({ algorithm, setAlgorithm }) {
   const classes = useStyles();
-  // const [algorithm, setAlgorithm] = useState(0);
   return (
     <div className={classes.root}>
       <h1 style={{ textAlign: 'center', margin: '5px 0 15px 0', }}>Sorting Algorithms Visualizer</h1>
