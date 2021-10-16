@@ -1,20 +1,16 @@
-import React, { useState } from 'react';
-import './App.css';
-import AlgoDisplay from './components/AlgoDisplay';
-import Controller from './components/Controller';
-import Navbar from './components/Navbar';
-import { getRandowArray } from './helper';
+import React from "react";
+import { NavBar } from "./components/Navbar";
+import { Controller } from "./components/Controller";
+import { AlgoDisplay } from "./components/AlgoDisplay";
+import './App.css'
 
-function App() {
-  const [array, setArray] = useState(getRandowArray());
-  const [algorithm, setAlgorithm] = useState(0);
+
+export default function App() {
   return (
     <div className="app-container">
-      <Navbar algorithm={algorithm} setAlgorithm={setAlgorithm} />
-      <Controller array={array} setArray={setArray} />
-      <AlgoDisplay array={array} algorithm={algorithm} />
+      <NavBar />
+      <Controller />
+      <AlgoDisplay />
     </div>
   );
 }
-
-export default App;

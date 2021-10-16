@@ -1,17 +1,97 @@
-import React from 'react'
+import React from "react";
+import styled from "styled-components";
+import {
+  comparisionColor,
+  swapColor,
+  sortedColor,
+  pivotColor,
+} from "../../common/config";
+import { useControls } from "../../common/store";
+import { ArrayHolder, ArrayItem, sourceAnimation, destinationAnimation } from "../../common/styles"
 
-function ArrayContainer({ array }) {
+let swapTime = useControls.getState().swapTime;
+useControls.subscribe(
+  (time) => (swapTime = time),
+  (state) => state.swapTime
+);
+
+const Source = styled(ArrayItem)`
+  animation: ${(props) => destinationAnimation(props.distance, swapColor)}
+    ${() => swapTime / 1000}s forwards;
+`;
+
+const Destination = styled(ArrayItem)`
+  animation: ${(props) => sourceAnimation(props.distance, swapColor)}
+    ${() => swapTime / 1000}s forwards;
+`;
+
+export function ArrayContainer({
+  array,
+  source,
+  destination,
+  pivot = -1,
+  highlightIndices,
+  sortedIndices,
+}) {
+
+  function getBackgroundColor(i) {
+    if (i === pivot) {
+      return pivotColor;
+    }
+
+    if (highlightIndices.includes(i)) {
+      return comparisionColor;
+    }
+
+    if (sortedIndices.includes(i)) {
+      return sortedColor;
+    }
+    return "";
+  }
+
   return (
-    <div className="array-holder">
+    <ArrayHolder>
       {array.map((value, i) => {
+        if (i === source) {
+          return (
+            <Source
+              key={i + ":" + source + ":" + destination + ":" + value}
+              distance={destination - source}
+              style={{
+                order: destination,
+                backgroundColor: getBackgroundColor(i),
+              }}
+            >
+              {value}
+            </Source>
+          );
+        }
+        if (i === destination) {
+          return (
+            <Destination
+              key={i + ":" + destination + ":" + source + ":" + value}
+              distance={destination - source}
+              style={{
+                order: source,
+                backgroundColor: getBackgroundColor(i),
+              }}
+            >
+              {value}
+            </Destination>
+          );
+        }
         return (
-          <div className="array-item">
+          <ArrayItem
+            key={i + ":" + destination + ":" + source + ":" + value}
+            style={{
+              order: i,
+              backgroundColor: getBackgroundColor(i),
+            }}
+          >
             {value}
-          </div>
-        )
+          </ArrayItem>
+        );
       })}
-    </div>
-  )
+    </ArrayHolder>
+  );
 }
-
-export default ArrayContainer

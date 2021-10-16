@@ -8,7 +8,6 @@ export function convertInputToArrayString(string) {
   return string;
 }
 
-
 export function convertArrayStringToArray(string) {
   return string
     .split(",")
@@ -16,15 +15,18 @@ export function convertArrayStringToArray(string) {
     .map((v) => +v);
 }
 
-export function getRandowArray(length = generateRandowNumber(5, 20)) {
-  return Array.from(new Array(length), () => generateRandowNumber())
+export function getRandomArray(length = generateRandomNumberInRange(5, 30)) {
+  return Array.from(new Array(length), () => generateRandomNumberInRange());
+}
+
+export function getScreenWidth() {
+  return window.innerWidth;
 }
 
 export function delay(time) {
-  return new Promise((resolve) => setTimeout(resolve, time))
+  return new Promise((resolve) => setTimeout(resolve, time));
 }
 
-
-function generateRandowNumber(lowerLimit = 0, upperLimit = 999) {
+function generateRandomNumberInRange(lowerLimit = 0, upperLimit = 999) {
   return lowerLimit + Math.floor(Math.random() * upperLimit);
 }

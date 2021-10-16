@@ -1,8 +1,25 @@
-import React from 'react'
-import { sortingAlgorithms } from '../config';
-import ArrayContainer from './visualizer/ArrayContainer';
-import Timer from './visualizer/Timer';
+import React, { useEffect } from "react";
+import styled from "styled-components";
+import { sortingAlgorithms } from "../common/config";
+import { useControls, useData } from "../common/store";
+import shallow from "zustand/shallow";
+import { SortManager } from "./visualizer/SortManager";
 
+const FlexWrap = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 100%;
+  column-gap: 10px;
+  row-gap: 10px;
+
+  & > div {
+    max-width: 100%;
+    min-width: 375px;
+  }
+`;
+
+const flexCenter = { display: "flex", justifyContent: "center" };
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -21,57 +38,48 @@ function TabPanel(props) {
   );
 }
 
-function AlgoDisplay({ array, algorithm }) {
+export function AlgoDisplay() {
+  const resetSorting = useControls((state) => state.resetSorting);
+
+  const [sortingArray, algorithm] = useData(
+    (state) => [state.sortingArray, state.algorithm],
+    shallow
+  );
+
+  useEffect(() => {
+    resetSorting();
+  }, [algorithm]);
+
+  if (sortingArray.length === 0)
+    return (
+      <h3 style={flexCenter}>
+        Please enter input array or use generate button
+      </h3>
+    );
+
   return (
-    <div style={{ display: 'flex', justifyContent: 'center' }}>
-      {
-        sortingAlgorithms.map((algoInfo, index) => (
-          <TabPanel value={algorithm} index={index} key={algoInfo.name}>
-            <div className="algo-container">
-              <div className="algo-header">
-                <strong>{algoInfo.name}</strong>
-                <div className="timer-div">
-                  <span>Time:</span>
-                  <strong>
-                    <Timer />
-                  </strong>
-                </div>
-              </div>
-              <ArrayContainer array={array} />
-              <div className="info-footer">
-                <div>Swaps: <strong>{0}</strong></div>
-                <div>Comparisions: <strong>{0}</strong></div>
-              </div>
-            </div>
-          </TabPanel>
-        ))
-      }
-      <TabPanel value={algorithm} index={sortingAlgorithms.length} >
-        <div className="all-algo">
-          {
-            sortingAlgorithms.map(algoInfo => (
-              <div className="algo-container">
-                <div className="algo-header">
-                  <strong>{algoInfo.name}</strong>
-                  <div className="timer-div">
-                    <span>Time:</span>
-                    <strong>
-                      <Timer />
-                    </strong>
-                  </div>
-                </div>
-                <ArrayContainer array={array} />
-                <div className="info-footer">
-                  <div>Swaps: <strong>{0}</strong></div>
-                  <div>Comparisions: <strong>{0}</strong></div>
-                </div>
-              </div>
-            ))
-          }
-        </div>
+    <div style={flexCenter}>
+      {sortingAlgorithms.map((algoInfo, idx) => (
+        <TabPanel value={algorithm} index={idx} key={algoInfo.name}>
+          <SortManager
+            array={sortingArray}
+            sortFunction={algoInfo.component}
+            sortingAlgorithmName={algoInfo.name}
+          />
+        </TabPanel>
+      ))}
+      <TabPanel value={algorithm} index={sortingAlgorithms.length}>
+        <FlexWrap>
+          {sortingAlgorithms.map((algoInfo) => (
+            <SortManager
+              array={sortingArray}
+              sortFunction={algoInfo.component}
+              sortingAlgorithmName={algoInfo.name}
+              key={algoInfo.name}
+            />
+          ))}
+        </FlexWrap>
       </TabPanel>
     </div>
-  )
+  );
 }
-
-export default AlgoDisplay

@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
-import { sortingAlgorithms } from '../config';
+import { sortingAlgorithms } from "../common/config";
+import { useData } from "../common/store";
+import shallow from "zustand/shallow";
 
 function a11yProps(index) {
   return {
@@ -12,11 +14,27 @@ function a11yProps(index) {
   };
 }
 
-function Navbar({ algorithm, setAlgorithm }) {
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+    width: "100%",
+    // backgroundColor: theme.palette.background.paper,
+    backgroundColor: 'transparent'
+  },
+}));
+
+export function NavBar() {
   const classes = useStyles();
+
+  const [algorithm, setAlgorithm] = useData(
+    (state) => [state.algorithm, state.setAlgorithm],
+    shallow
+  );
+  console.log(algorithm);
+
   return (
     <div className={classes.root}>
-      <h1 style={{ textAlign: 'center', margin: '5px 0 15px 0', }}>Sorting Algorithms Visualizer</h1>
+      <h1 style={{ textAlign: 'center' }}>Sorting Algorithms Visualizer</h1>
       <AppBar position="static" >
         <Tabs
           value={algorithm}
@@ -38,16 +56,5 @@ function Navbar({ algorithm, setAlgorithm }) {
         </Tabs>
       </AppBar>
     </div>
-  )
+  );
 }
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-    width: "100%",
-    backgroundColor: theme.palette.background.paper,
-    // margin: '0px 10px'
-  },
-}));
-
-export default Navbar
